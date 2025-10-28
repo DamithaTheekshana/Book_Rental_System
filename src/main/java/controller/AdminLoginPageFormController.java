@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import service.AdminLoginService;
 import service.Impl.AdminLoginServiceImpl;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -46,8 +47,7 @@ public class AdminLoginPageFormController {
             }
             AdminDashboardStage.show();
         }else {
-            System.out.println(false);
+            JOptionPane.showMessageDialog(null, "Invalid login!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }
