@@ -1,0 +1,26 @@
+.background{
+-fx-background-image: url("/img/pexels-ann-h-45017-4102615.jpg");
+-fx-background-size: cover;
+-fx-background-repeat: no-repeat;
+-fx-background-position: center;
+}
+
+.SearchBar{
+-fx-background-radius: 10;
+-fx-boder-color: #575757;
+}
+
+.addBtn{
+-fx-background-radius: 8;
+-fx-background-color: #23B83C;
+}
+
+.deleteBtn{
+-fx-background-radius: 8;
+-fx-background-color: #DC0F12;
+}
+
+.updateBtn{
+-fx-background-radius: 8;
+-fx-background-color: #8F2CC4;
+}
