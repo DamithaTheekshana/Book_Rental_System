@@ -17,13 +17,13 @@
             <Font name="Arial Black" size="41.0" />
          </font>
       </Label>
-      <TableView fx:id="tblBook" layoutX="21.0" layoutY="90.0" prefHeight="328.0" prefWidth="374.0">
+      <TableView fx:id="tblBook" layoutX="21.0" layoutY="90.0" prefHeight="328.0" prefWidth="383.0">
         <columns>
-          <TableColumn fx:id="colBookID" prefWidth="75.0" text="Book_ID" />
-          <TableColumn fx:id="colTitle" prefWidth="75.0" text="Title" />
-            <TableColumn fx:id="colAsuthor" prefWidth="75.0" text="Author" />
-            <TableColumn fx:id="colQty" prefWidth="75.0" text="Qty" />
-            <TableColumn fx:id="colLanguage" prefWidth="75.0" text="Language" />
+          <TableColumn fx:id="colBookID" prefWidth="59.0" text="Book_ID" />
+          <TableColumn fx:id="colTitle" prefWidth="88.0" text="Title" />
+            <TableColumn fx:id="colAuthor" prefWidth="113.0" text="Author" />
+            <TableColumn fx:id="colQty" prefWidth="54.0" text="Qty" />
+            <TableColumn fx:id="colLanguage" prefWidth="68.0" text="Language" />
         </columns>
       </TableView>
       <TextField fx:id="txtSearchbar" layoutX="452.0" layoutY="90.0" onAction="#txtSearchbarOnAction" prefHeight="25.0" prefWidth="209.0" promptText="Search book..." styleClass="SearchBar" stylesheets="@../StyleCSS/BookPage.css" />

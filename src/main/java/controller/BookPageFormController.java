@@ -1,15 +1,30 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.dto.Book;
+import model.dto.Customer;
+import service.BookPageService;
+import service.Impl.BookPageServiceImpl;
 
-public class BookPageFormController {
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+public class BookPageFormController implements Initializable {
+
+    ObservableList <Book> books = FXCollections.observableArrayList();
+    BookPageService bookPageService = new BookPageServiceImpl();
 
     @FXML
     private Button btnAdd;
@@ -21,7 +36,7 @@ public class BookPageFormController {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<?, ?> colAsuthor;
+    private TableColumn<?, ?> colAuthor;
 
     @FXML
     private TableColumn<?, ?> colBookID;
@@ -39,7 +54,7 @@ public class BookPageFormController {
     private ImageView imgIcon;
 
     @FXML
-    private TableView<?> tblBook;
+    private TableView<Book> tblBook;
 
     @FXML
     private TextField tctQty;
@@ -75,13 +90,62 @@ public class BookPageFormController {
     }
 
     @FXML
-    void iconSearchOnAction(MouseEvent event) {
-
+    void iconSearchOnAction(MouseEvent event) throws SQLException {
+        String bookName = txtSearchbar.getText();
+        books.clear();
+        books = bookPageService.getSearchedBook(bookName);
+        tblBook.setItems(books);
     }
 
     @FXML
-    void txtSearchbarOnAction(ActionEvent event) {
+    void txtSearchbarOnAction(ActionEvent event) throws SQLException {
+         String bookName = txtSearchbar.getText();
+         books.clear();
+         books = bookPageService.getSearchedBook(bookName);
+         tblBook.setItems(books);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        colBookID.setCellValueFactory(new PropertyValueFactory<>("Book_ID"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        colAuthor.setCellValueFactory(new PropertyValueFactory<>("Author"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("Qty"));
+        colLanguage.setCellValueFactory(new PropertyValueFactory<>("Language"));
+
+        getAllBooks();
+
+        tblBook.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if(newValue != null){
+                System.out.println(newValue);
+
+                setSelectedValue(newValue);
+
+            }
+        });
+    }
+
+    private void getAllBooks(){
+          books.clear();
+          books = bookPageService.getAllCustomers();
+          tblBook.setItems(books);
+    }
+
+    private void setSelectedValue(Book selectedValue){
+        txtBookID.setText(selectedValue.getBook_ID());
+        txtTitle.setText(selectedValue.getTitle());
+        txtAuthor.setText(selectedValue.getAuthor());
+        tctQty.setText(String.valueOf(selectedValue.getQty()));
+        txtLanguage.setText(selectedValue.getLanguage());
 
     }
 
+    private void clearBooks(){
+         txtBookID.setText(null);
+         txtTitle.setText(null);
+         txtAuthor.setText(null);
+         tctQty.setText(null);
+         txtLanguage.setText(null);
+    }
 }
