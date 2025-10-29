@@ -76,17 +76,37 @@ public class BookPageFormController implements Initializable {
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
+         String bookId   = txtBookID.getText();
+         String title    = txtTitle.getText();
+         String author   = txtAuthor.getText();
+         int    qty      = Integer.parseInt(tctQty.getText());
+         String language = txtLanguage.getText();
 
+         bookPageService.addBook(bookId, title, author, qty, language);
+         getAllBooks();
+         clearBooks();
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+        String bookId   = txtBookID.getText();
 
+        bookPageService.deleteBook(bookId);
+        getAllBooks();
+        clearBooks();
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+        String bookId   = txtBookID.getText();
+        String title    = txtTitle.getText();
+        String author   = txtAuthor.getText();
+        int    qty      = Integer.parseInt(tctQty.getText());
+        String language = txtLanguage.getText();
 
+        bookPageService.updateBook(bookId, title, author, qty, language);
+        getAllBooks();
+        clearBooks();
     }
 
     @FXML
@@ -95,6 +115,7 @@ public class BookPageFormController implements Initializable {
         books.clear();
         books = bookPageService.getSearchedBook(bookName);
         tblBook.setItems(books);
+
     }
 
     @FXML

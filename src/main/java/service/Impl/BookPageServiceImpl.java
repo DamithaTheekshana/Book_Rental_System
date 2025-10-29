@@ -52,4 +52,19 @@ public class BookPageServiceImpl implements BookPageService {
         }
         return books;
     }
+
+    @Override
+    public void addBook(String bookId, String title, String author, int qty, String language) {
+        bookPageRepository.addBook(bookId, title, author, qty, language);
+    }
+
+    @Override
+    public void deleteBook(String bookId) {
+        bookPageRepository.deleteBook(bookId);
+    }
+
+    @Override
+    public void updateBook(String bookId, String title, String author, int qty, String language) {
+        bookPageRepository.updateBook(bookId, title, author, qty, language);
+    }
 }

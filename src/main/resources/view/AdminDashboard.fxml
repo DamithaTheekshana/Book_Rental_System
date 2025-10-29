@@ -11,7 +11,7 @@
    <children>
       <AnchorPane prefHeight="520.0" prefWidth="200.0" style="-fx-background-color: #E4C990;">
          <children>
-            <ImageView fitHeight="126.0" fitWidth="149.0" layoutX="37.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="126.0" fitWidth="149.0" layoutX="37.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="366.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="28.0">
                <image>
                   <Image url="@../img/Systema Noleggio Libri.png" />
                </image>
