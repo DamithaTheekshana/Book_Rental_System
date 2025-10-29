@@ -38,7 +38,6 @@ public class AdminLoginPageFormController {
         boolean isOk = adminLoginService.chekUser(username , password , JobRole);
 
         if (isOk){
-            System.out.println(true);
             Stage AdminDashboardStage = new Stage();
             try {
                 AdminDashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
@@ -47,7 +46,7 @@ public class AdminLoginPageFormController {
             }
             AdminDashboardStage.show();
         }else {
-            JOptionPane.showMessageDialog(null, "Invalid login!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Invalid login! please try again", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

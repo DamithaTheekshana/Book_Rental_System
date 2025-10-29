@@ -13,6 +13,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Override
     public boolean chekUser(String username, String password, String JobRole) throws SQLException {
+
           ResultSet resultSet = adminLoginRepository.getUser(username);
 
           if (resultSet.next()){
