@@ -45,9 +45,11 @@ public class AdminDashboardFormController {
 
     }
 
+    Stage customerPageStage = new Stage();
     @FXML
-    void btnCustomersOnAction(ActionEvent event) {
-
+    void btnCustomersOnAction(ActionEvent event) throws IOException {
+         customerPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerPage.fxml"))));
+         customerPageStage.show();
     }
 
     @FXML

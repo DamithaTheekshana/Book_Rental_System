@@ -43,9 +43,15 @@ public class StaffDashboardFormController {
 
     }
 
+    Stage customerPageStage = new Stage();
     @FXML
     void btnCustomersOnAction(ActionEvent event) {
-
+        try {
+            customerPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerPage.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        customerPageStage.show();
     }
 
     @FXML
