@@ -59,9 +59,15 @@ public class StaffDashboardFormController {
 
     }
 
+    Stage rentalPageStage = new Stage();
     @FXML
     void btnRentalsOnActon(ActionEvent event) {
-
+        try {
+            rentalPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/RentalPage.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        rentalPageStage.show();
     }
 
 }
