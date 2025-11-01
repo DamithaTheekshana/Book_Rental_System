@@ -18,6 +18,7 @@ import service.RentalBookService;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class RentalPageFormController implements Initializable {
@@ -86,13 +87,26 @@ public class RentalPageFormController implements Initializable {
     private TextField txtSearchbar;
 
     @FXML
-    void btnAddOnAction(ActionEvent event) {
+    void btnAddOnAction(ActionEvent event) throws SQLException {
+        String rentalId = txtRentalID.getText();
+        String bookId   = txtBookID.getText();
+        String custId   = txtCustID.getText();
+        String rentalDate = txtRentalDate.getText();
+        String dueDate    = txtDueDate.getText();
+        int qty = Integer.parseInt(txtQty.getText());
 
+        rentalBookService.addRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
+        rentalBooks.clear();
+        clearRentalBook();
+        getAllRentalBooks();
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-
+    void btnDeleteOnAction(ActionEvent event) throws SQLException {
+         String deleteID = txtRentalID.getText();
+         rentalBookService.deleteRental(deleteID);
+         clearRentalBook();
+         getAllRentalBooks();
     }
 
     @FXML
@@ -101,18 +115,33 @@ public class RentalPageFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException {
+        String rentalId = txtRentalID.getText();
+        String bookId   = txtBookID.getText();
+        String custId   = txtCustID.getText();
+        String rentalDate = txtRentalDate.getText();
+        String dueDate    = txtDueDate.getText();
+        int qty = Integer.parseInt(txtQty.getText());
 
+        rentalBookService.updateRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
+        clearRentalBook();
+        getAllRentalBooks();
     }
 
     @FXML
-    void iconSearchOnAction(MouseEvent event) {
-
+    void iconSearchOnAction(MouseEvent event) throws SQLException {
+        String rentalId = txtSearchbar.getText();
+        rentalBooks.clear();
+        rentalBooks = rentalBookService.searchRental(rentalId);
+        tblRental.setItems(rentalBooks);
     }
 
     @FXML
-    void txtSearchbarOnAction(ActionEvent event) {
-
+    void txtSearchbarOnAction(ActionEvent event) throws SQLException {
+        String rentalId = txtSearchbar.getText();
+        rentalBooks.clear();
+        rentalBooks = rentalBookService.searchRental(rentalId);
+        tblRental.setItems(rentalBooks);
     }
 
     @Override
@@ -155,6 +184,15 @@ public class RentalPageFormController implements Initializable {
         txtRentalDate.setText(String.valueOf(selectedValue.getRental_Date()));
         txtDueDate.setText(String.valueOf(selectedValue.getDue_Date()));
         txtQty.setText(String.valueOf(selectedValue.getQty()));
+    }
+
+    private void clearRentalBook(){
+        txtRentalID.setText(null);
+        txtBookID.setText(null);
+        txtCustID.setText(null);
+        txtRentalDate.setText(null);
+        txtDueDate.setText(null);
+        txtQty.setText(null);
     }
 
 
