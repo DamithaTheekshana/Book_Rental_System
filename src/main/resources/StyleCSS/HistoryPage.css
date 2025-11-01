@@ -1,0 +1,11 @@
+.background{
+-fx-background-image: url("/img/pexels-helenalopes-711009.jpg");
+-fx-background-size: cover;
+-fx-background-repeat: no-repeat;
+-fx-background-position: center;
+}
+
+.btnClear{
+-fx-background-radius: 50;
+-fx-boder-color: #F52800;
+}

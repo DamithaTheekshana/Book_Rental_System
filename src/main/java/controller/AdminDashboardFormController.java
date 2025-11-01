@@ -68,9 +68,15 @@ public class AdminDashboardFormController {
         rentalPageStage.show();
     }
 
+    Stage historyPageStage = new Stage();
     @FXML
     void btnRepotsOnAction(ActionEvent event) {
-
+        try {
+            historyPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/HistoryPage.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        historyPageStage.show();
     }
 
 }

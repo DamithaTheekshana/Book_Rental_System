@@ -17,6 +17,7 @@ public class RentalBookHistory {
     private String Book_ID;
     private Date Rental_Date;
     private Date Due_Date;
+    private int Qty;
     private Date Return_Date;
     private int Overdue_Days;
     private double Fine_Amount;
