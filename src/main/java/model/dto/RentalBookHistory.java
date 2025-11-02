@@ -12,7 +12,6 @@ import java.util.Date;
 
 public class RentalBookHistory {
 
-    private String Rental_ID;
     private String Book_ID;
     private String Cust_ID;
     private Date Rental_Date;

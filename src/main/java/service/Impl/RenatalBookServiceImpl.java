@@ -61,7 +61,7 @@ public class RenatalBookServiceImpl implements RentalBookService {
 
 //                ---------- Update History Table ----------
                 if (isUpdated){
-                    boolean AddedHistory = historyPageService.addHistory(rentalId, bookId, custId, rentalDate, dueDate, qty);
+                    boolean AddedHistory = historyPageService.addHistory(bookId, custId, rentalDate, dueDate, qty);
                     System.out.println("Added History : "+AddedHistory );
 
                     if (AddedHistory) {
@@ -121,7 +121,7 @@ public class RenatalBookServiceImpl implements RentalBookService {
                 System.out.println("Added Book Qty : "+isAddedBookQty);
 
                 if (isAddedBookQty){
-                    boolean isupdateTblHistory = historyPageService.updateTblHistory(rentalId, returnDate, overdueDays, fineAmount);
+                    boolean isupdateTblHistory = historyPageService.updateTblHistory(bookId, custId, returnDate, overdueDays, fineAmount);
                     System.out.println("Update Table History : "+isupdateTblHistory);
 
                     if (isupdateTblHistory){

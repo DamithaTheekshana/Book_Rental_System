@@ -14,9 +14,8 @@
             <Font name="Arial Black" size="41.0" />
          </font>
       </Label>
-      <TableView fx:id="tblHistory" layoutX="22.0" layoutY="151.0" prefHeight="337.0" prefWidth="833.0">
+      <TableView fx:id="tblHistory" layoutX="60.0" layoutY="148.0" prefHeight="337.0" prefWidth="759.0">
         <columns>
-          <TableColumn fx:id="colRentalID" prefWidth="75.0" text="Rental_ID" />
           <TableColumn fx:id="colBookID" prefWidth="75.0" text="Book_ID" />
             <TableColumn fx:id="colCustID" prefWidth="75.0" text="Cust_ID" />
             <TableColumn fx:id="colRentalDate" prefWidth="107.0" text="Rental_Date" />

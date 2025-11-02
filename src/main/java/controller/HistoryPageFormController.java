@@ -47,24 +47,21 @@ public class HistoryPageFormController implements Initializable {
     private TableColumn<?, ?> colRentalDate;
 
     @FXML
-    private TableColumn<?, ?> colRentalID;
-
-    @FXML
     private TableColumn<?, ?> colReturnDate;
 
     @FXML
     private TableView<RentalBookHistory> tblHistory;
 
     @FXML
-    void btnClearOnAction(ActionEvent event) {
-        rentalBookHistories.clear();
-        historyPageService.clearData();
-
+    void btnClearOnAction(ActionEvent event) throws SQLException {
+         rentalBookHistories.clear();
+         historyPageService.clearData();
+         getAllHistory();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colRentalID.setCellValueFactory(new PropertyValueFactory<>("Rental_ID"));
+
         colBookID.setCellValueFactory(new PropertyValueFactory<>("Book_ID"));
         colCustID.setCellValueFactory(new PropertyValueFactory<>("Cust_ID"));
         colRentalDate.setCellValueFactory(new PropertyValueFactory<>("Rental_Date"));
@@ -81,9 +78,10 @@ public class HistoryPageFormController implements Initializable {
         }
     }
 
-    private void getAllHistory() throws SQLException {
+    private void getAllHistory() throws SQLException, SQLException {
         rentalBookHistories.clear();
         rentalBookHistories = historyPageService.getAllHistory();
         tblHistory.setItems(rentalBookHistories);
     }
+
 }

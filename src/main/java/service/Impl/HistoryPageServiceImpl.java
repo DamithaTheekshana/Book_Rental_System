@@ -22,7 +22,6 @@ public class HistoryPageServiceImpl implements HistoryPageService {
         ResultSet resultSet = historyPageRepository.getAllHistories();
         while (resultSet.next()){
             rentalBookHistories.add(new RentalBookHistory(
-                    resultSet.getString("Rental_ID"),
                     resultSet.getString("Book_ID"),
                     resultSet.getString("Cust_ID"),
                     resultSet.getDate("Rental_Date"),
@@ -37,14 +36,14 @@ public class HistoryPageServiceImpl implements HistoryPageService {
     }
 
     @Override
-    public boolean addHistory(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
-        boolean addedHistory = historyPageRepository.addHistory(rentalId, bookId, custId, rentalDate, dueDate, qty);
+    public boolean addHistory(String bookId, String custId, String rentalDate, String dueDate, int qty) {
+        boolean addedHistory = historyPageRepository.addHistory(bookId, custId, rentalDate, dueDate, qty);
         return addedHistory;
     }
 
     @Override
-    public boolean updateTblHistory(String rentalId, String returnDate, int overdueDays, double fineAmount) {
-        boolean updateTblHistory = historyPageRepository.updateTblHistory(rentalId, returnDate, overdueDays, fineAmount);
+    public boolean updateTblHistory(String bookId, String custId, String returnDate, int overdueDays, double fineAmount) {
+        boolean updateTblHistory = historyPageRepository.updateTblHistory(bookId, custId, returnDate, overdueDays, fineAmount);
         return updateTblHistory;
     }
 
