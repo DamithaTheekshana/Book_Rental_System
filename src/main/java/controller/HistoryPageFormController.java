@@ -2,6 +2,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class HistoryPageFormController implements Initializable {
 
-    ObservableList <RentalBookHistory> rentalBookHistories = FXCollections.observableArrayList();
+    ObservableList<RentalBookHistory> rentalBookHistories = FXCollections.observableArrayList();
     HistoryPageService historyPageService = new HistoryPageServiceImpl();
 
     @FXML
@@ -53,6 +54,13 @@ public class HistoryPageFormController implements Initializable {
 
     @FXML
     private TableView<RentalBookHistory> tblHistory;
+
+    @FXML
+    void btnClearOnAction(ActionEvent event) {
+        rentalBookHistories.clear();
+        historyPageService.clearData();
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

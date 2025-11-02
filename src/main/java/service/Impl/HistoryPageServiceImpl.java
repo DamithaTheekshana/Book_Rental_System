@@ -35,4 +35,21 @@ public class HistoryPageServiceImpl implements HistoryPageService {
         }
         return rentalBookHistories;
     }
+
+    @Override
+    public boolean addHistory(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
+        boolean addedHistory = historyPageRepository.addHistory(rentalId, bookId, custId, rentalDate, dueDate, qty);
+        return addedHistory;
+    }
+
+    @Override
+    public boolean updateTblHistory(String rentalId, String returnDate, int overdueDays, double fineAmount) {
+        boolean updateTblHistory = historyPageRepository.updateTblHistory(rentalId, returnDate, overdueDays, fineAmount);
+        return updateTblHistory;
+    }
+
+    @Override
+    public void clearData() {
+        historyPageRepository.clearData();
+    }
 }

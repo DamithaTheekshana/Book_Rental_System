@@ -67,4 +67,16 @@ public class BookPageServiceImpl implements BookPageService {
     public void updateBook(String bookId, String title, String author, int qty, String language) {
         bookPageRepository.updateBook(bookId, title, author, qty, language);
     }
+
+    @Override
+    public boolean updateBookQty(int qty, String bookId) {
+        boolean isAdded = bookPageRepository.updateBookQty(qty, bookId);
+        return isAdded;
+    }
+
+    @Override
+    public boolean addedBookQty(int qty, String bookId) {
+        boolean isAddQty = bookPageRepository.addedBookQty(qty, bookId);
+        return isAddQty;
+    }
 }

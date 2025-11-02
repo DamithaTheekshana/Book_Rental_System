@@ -13,4 +13,8 @@ public interface BookPageRepository {
     void deleteBook(String bookId);
 
     void updateBook(String bookId, String title, String author, int qty, String language);
+
+    boolean updateBookQty(int qty,String bookId);
+
+    boolean addedBookQty(int qty, String bookId);
 }

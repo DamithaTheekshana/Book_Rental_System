@@ -18,7 +18,7 @@ public class RentalBookRepositoryImpl implements RentalBookRepository {
     }
 
     @Override
-    public void addRentakBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
+    public boolean addRentakBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -30,7 +30,7 @@ public class RentalBookRepositoryImpl implements RentalBookRepository {
             pstm.setObject(5,dueDate);
             pstm.setObject(6,qty);
 
-            pstm.executeUpdate();
+            return pstm.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,5 +75,19 @@ public class RentalBookRepositoryImpl implements RentalBookRepository {
         pstm.setObject(1,rentalId);
         ResultSet resultSet = pstm.executeQuery();
         return resultSet;
+    }
+
+    @Override
+    public boolean returnRental(String rentalId) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("DELETE FROM rentalbook WHERE Rental_ID = ?");
+            pstm.setObject(1,rentalId);
+
+            return  pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

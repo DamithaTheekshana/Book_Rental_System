@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="599.0" prefWidth="877.0" styleClass="background" stylesheets="@../StyleCSS/HistoryPage.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HistoryPageFormController">
    <children>
       <Label layoutX="173.0" layoutY="44.0" text="Rental / Return Repotes" textFill="WHITE">
@@ -28,7 +27,7 @@
             <TableColumn fx:id="colFineAmount" prefWidth="96.0" text="Fine Amount" />
         </columns>
       </TableView>
-      <Button fx:id="btnClear" layoutX="375.0" layoutY="508.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="129.0" styleClass="btnClear" stylesheets="@../StyleCSS/HistoryPage.css" text="Clear" textFill="#fc0606">
+      <Button fx:id="btnClear" layoutX="375.0" layoutY="508.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="45.0" prefWidth="129.0" styleClass="btnClear" stylesheets="@../StyleCSS/HistoryPage.css" text="Clear" textFill="#fc0606">
          <font>
             <Font size="27.0" />
          </font>

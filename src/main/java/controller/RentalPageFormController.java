@@ -13,18 +13,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.dto.RentalBook;
-import service.Impl.RenataBookServiceImpl;
+import service.Impl.RenatalBookServiceImpl;
 import service.RentalBookService;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class RentalPageFormController implements Initializable {
 
     ObservableList<RentalBook> rentalBooks = FXCollections.observableArrayList();
-    RentalBookService rentalBookService = new RenataBookServiceImpl();
+    RentalBookService rentalBookService = new RenatalBookServiceImpl();
 
     @FXML
     private Button btnAdd;
@@ -101,6 +103,8 @@ public class RentalPageFormController implements Initializable {
         getAllRentalBooks();
     }
 
+
+
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException {
          String deleteID = txtRentalID.getText();
@@ -110,7 +114,23 @@ public class RentalPageFormController implements Initializable {
     }
 
     @FXML
-    void btnReturnOnAction(ActionEvent event) {
+    void btnReturnOnAction(ActionEvent event) throws SQLException {
+        String rentalId = txtRentalID.getText();
+        String bookId   = txtBookID.getText();
+        String custId   = txtCustID.getText();
+        String rentalDate = txtRentalDate.getText();
+        String dueDate    = txtDueDate.getText();
+        int qty = Integer.parseInt(txtQty.getText());
+        String returnDate = txtReturnDate.getText();
+        int overdueDays = Integer.parseInt(getOverdueDays(rentalDate, dueDate, returnDate));
+        double fineAmount = overdueDays * 50;
+        System.out.println(overdueDays);
+        System.out.println(fineAmount);
+
+        rentalBookService.setReturn(rentalId, bookId, custId, rentalDate, dueDate, qty, returnDate, overdueDays, fineAmount);
+        clearRentalBook();
+        getAllRentalBooks();
+
 
     }
 
@@ -193,7 +213,30 @@ public class RentalPageFormController implements Initializable {
         txtRentalDate.setText(null);
         txtDueDate.setText(null);
         txtQty.setText(null);
+        txtReturnDate.setText(null);
     }
+
+
+
+    private String getOverdueDays(String rentalDate, String dueDate, String returnDate) {
+        // Define date format (oya UI eke danna date format eka anuwa mekata wenas karanna puluwan)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convert Strings to LocalDate objects
+        LocalDate due = LocalDate.parse(dueDate, formatter);
+        LocalDate returned = LocalDate.parse(returnDate, formatter);
+
+        // Calculate days between due date and return date
+        long daysBetween = ChronoUnit.DAYS.between(due, returned);
+
+        // If return date is before due date, no overdue
+        if (daysBetween <= 0) {
+            return "0";
+        } else {
+            return String.valueOf(daysBetween);
+        }
+    }
+
 
 
 }

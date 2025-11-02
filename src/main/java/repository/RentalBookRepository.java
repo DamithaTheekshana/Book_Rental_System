@@ -6,11 +6,13 @@ import java.sql.SQLException;
 public interface RentalBookRepository {
     ResultSet getAllRentalBooks() throws SQLException;
 
-    void addRentakBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty);
+    boolean addRentakBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty);
 
     void deleteRental(String deleteID);
 
     void updateRentalBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty);
 
     ResultSet searchRental(String rentalId) throws SQLException;
+
+    boolean returnRental(String rentalId);
 }
