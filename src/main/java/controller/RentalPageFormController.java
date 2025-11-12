@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.dto.RentalBook;
-import service.Impl.RenatalBookServiceImpl;
+import service.Impl.RentalBookServiceImpl;
 import service.RentalBookService;
 
 import java.net.URL;
@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 public class RentalPageFormController implements Initializable {
 
     ObservableList<RentalBook> rentalBooks = FXCollections.observableArrayList();
-    RentalBookService rentalBookService = new RenatalBookServiceImpl();
+    RentalBookService rentalBookService = new RentalBookServiceImpl();
 
     @FXML
     private Button btnAdd;

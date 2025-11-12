@@ -1,14 +1,9 @@
 package service.Impl;
 
-import controller.RentalPageFormController;
 import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.dto.RentalBook;
-import repository.BookPageRepository;
-import repository.HistoryPageRepository;
-import repository.Impl.BookPageRepositoryImpl;
-import repository.Impl.HistoryRepositoryImpl;
 import repository.Impl.RentalBookRepositoryImpl;
 import repository.RentalBookRepository;
 import service.BookPageService;
@@ -20,7 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RenatalBookServiceImpl implements RentalBookService {
+public class RentalBookServiceImpl implements RentalBookService {
 
     ObservableList <RentalBook> rentalBooks = FXCollections.observableArrayList();
     RentalBookRepository rentalBookRepository = new RentalBookRepositoryImpl();
@@ -112,8 +107,23 @@ public class RenatalBookServiceImpl implements RentalBookService {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
             connection.setAutoCommit(false);
+            // ------------------ Show Fine Amount Message ------------------
+            if (fineAmount > 0) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "⚠️ You have a pending fine of Rs. " + fineAmount + "\nPlease settle it at the counter.",
+                        "Fine Alert",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            } else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "✅ No fines! Thank you for returning the book on time.",
+                        "Return Successful",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
 //        ---------- Rental Table ----------
-            JOptionPane.showMessageDialog(null, "Your Fine Amount is RS."+fineAmount);
             boolean isDeleted = rentalBookRepository.returnRental(rentalId);
             System.out.println("Return Ok : "+isDeleted);
 
@@ -128,6 +138,13 @@ public class RenatalBookServiceImpl implements RentalBookService {
 
                     if (isupdateTblHistory){
                         connection.commit();
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "✅ Book returned successfully!\nRecord updated in history.",
+                                "Success",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
                     }
                 }
 
