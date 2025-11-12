@@ -38,19 +38,19 @@ public class RentalBookRepositoryImpl implements RentalBookRepository {
     }
 
     @Override
-    public void deleteRental(String deleteID) {
+    public boolean deleteRental(String deleteID) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM rentalbook WHERE Rental_ID = ?");
             pstm.setObject(1,deleteID);
-            pstm.executeUpdate();
+            return pstm.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void updateRentalBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
+    public boolean updateRentalBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement("UPDATE rentalbook SET Rental_ID=?, Book_ID=?, Cust_ID=?, Rental_Date=?, Due_Date=?, Qty=? WHERE Rental_ID=?");
@@ -62,7 +62,7 @@ public class RentalBookRepositoryImpl implements RentalBookRepository {
             pstm.setObject(6,qty);
             pstm.setObject(7,rentalId);
 
-            pstm.executeUpdate();
+            return pstm.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -4,6 +4,8 @@ import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.dto.RentalBook;
+import repository.BookPageRepository;
+import repository.Impl.BookPageRepositoryImpl;
 import repository.Impl.RentalBookRepositoryImpl;
 import repository.RentalBookRepository;
 import service.BookPageService;
@@ -21,6 +23,7 @@ public class RentalBookServiceImpl implements RentalBookService {
     RentalBookRepository rentalBookRepository = new RentalBookRepositoryImpl();
     BookPageService bookPageService = new BookPageServiceImpl();
     HistoryPageService historyPageService = new HistoryPageServiceImpl();
+    BookPageRepository bookPageRepository = new BookPageRepositoryImpl();
 
 
     @Override
@@ -72,18 +75,28 @@ public class RentalBookServiceImpl implements RentalBookService {
         }finally {
             connection.setAutoCommit(true);
         }
-
-
     }
 
     @Override
     public void deleteRental(String deleteID) {
-        rentalBookRepository.deleteRental(deleteID);
+        boolean isDelete = rentalBookRepository.deleteRental(deleteID);
+
     }
 
     @Override
     public void updateRentalBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
-        rentalBookRepository.updateRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+//            ---------- Update Rental Book ---------
+            boolean isUpdate = rentalBookRepository.updateRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
+            System.out.println("Update Rental : "+isUpdate);
+//        ---------- Book Table Qty ----------
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     @Override

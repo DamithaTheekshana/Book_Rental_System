@@ -18,8 +18,12 @@ import service.RentalBookService;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
@@ -97,20 +101,58 @@ public class RentalPageFormController implements Initializable {
         String dueDate    = txtDueDate.getText();
         int qty = Integer.parseInt(txtQty.getText());
 
-        rentalBookService.addRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
-        rentalBooks.clear();
+        //ObservableList<RentalBook> data = FXCollections.observableArrayList();
+        RentalBook rentalBook =  new RentalBook();
+        rentalBook.setRental_ID(rentalId);
+        rentalBook.setBook_ID(bookId);
+        rentalBook.setCust_ID(custId);
+        rentalBook.setQty(qty);
+//        String dateString = "2025-11-12"; // Example date string
+        String pattern = "yyyy-MM-dd"; // Pattern matching the date string
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        try {
+            Date dateRenal = formatter.parse(rentalDate);
+            rentalBook.setRental_Date(dateRenal);
+            Date dateDue = formatter.parse(dueDate);
+            rentalBook.setDue_Date(dateDue);
+
+
+        } catch (ParseException e) {
+            System.err.println("Error parsing the date string: " + e.getMessage());
+            e.printStackTrace();
+        }
+        rentalBooks.add(rentalBook);
+        tblRental.setItems(rentalBooks);
+        //rentalBookService.addRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
+        //rentalBooks.clear();
         clearRentalBook();
-        getAllRentalBooks();
+        //getAllRentalBooks();
     }
 
 
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException {
-         String deleteID = txtRentalID.getText();
-         rentalBookService.deleteRental(deleteID);
-         clearRentalBook();
-         getAllRentalBooks();
+
+//         rentalBookService.deleteRental(txtRentalID.getText());
+//         clearRentalBook();
+//         getAllRentalBooks();
+
+        RentalBook selectedRental = tblRental.getSelectionModel().getSelectedItem();
+
+        if (selectedRental != null) {
+
+            rentalBookService.deleteRental(selectedRental.getRental_ID());
+
+            rentalBooks.remove(selectedRental);
+
+            tblRental.refresh();
+
+            clearRentalBook();
+        } else {
+            System.out.println("Please select a row to delete.");
+        }
+
     }
 
     @FXML
@@ -193,7 +235,7 @@ public class RentalPageFormController implements Initializable {
 
     private void getAllRentalBooks() throws SQLException {
         rentalBooks.clear();
-        rentalBooks = rentalBookService.getAllRentalBooks();
+        //rentalBooks = rentalBookService.getAllRentalBooks();
         tblRental.setItems(rentalBooks);
     }
 
