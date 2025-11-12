@@ -41,6 +41,7 @@ public class AdminLoginPageFormController {
             Stage AdminDashboardStage = new Stage();
             try {
                 AdminDashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
+                AdminDashboardStage.setResizable(false);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

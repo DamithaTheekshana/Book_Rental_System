@@ -42,6 +42,7 @@ public class StaffLoginPageFormController {
             Stage StaffDashboardStage = new Stage();
             try {
                 StaffDashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/StaffDashboard.fxml"))));
+                StaffDashboardStage.setResizable(false);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

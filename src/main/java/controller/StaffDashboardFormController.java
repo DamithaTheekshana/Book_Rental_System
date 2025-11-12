@@ -36,6 +36,7 @@ public class StaffDashboardFormController {
     void btnBooksOnAction(ActionEvent event) {
         try {
             BookPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/BookPage.fxml"))));
+            BookPageStage.setResizable(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -48,6 +49,7 @@ public class StaffDashboardFormController {
     void btnCustomersOnAction(ActionEvent event) {
         try {
             customerPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerPage.fxml"))));
+            customerPageStage.setResizable(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -64,6 +66,7 @@ public class StaffDashboardFormController {
     void btnRentalsOnActon(ActionEvent event) {
         try {
             rentalPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/RentalPage.fxml"))));
+            rentalPageStage.setResizable(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

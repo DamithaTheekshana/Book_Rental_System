@@ -12,6 +12,6 @@ public class Startter extends Application {
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/MainPage.fxml"))));
         stage.show();
-
+        stage.setResizable(false);
     }
 }

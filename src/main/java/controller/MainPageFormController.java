@@ -33,6 +33,7 @@ public class MainPageFormController {
     void btnAdminOnAction(ActionEvent event) {
         try {
             AdminLoginPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminLoginPage.fxml"))));
+            AdminLoginPageStage.setResizable(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -45,6 +46,7 @@ public class MainPageFormController {
     void btnStaffOnAction(ActionEvent event) {
         try {
             StaffLoginPageStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/StaffLoginPage.fxml"))));
+            StaffLoginPageStage.setResizable(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
