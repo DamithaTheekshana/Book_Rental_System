@@ -15,6 +15,7 @@ import service.BookPageService;
 import service.HistoryPageService;
 import service.RentalBookService;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -112,6 +113,7 @@ public class RenatalBookServiceImpl implements RentalBookService {
         try {
             connection.setAutoCommit(false);
 //        ---------- Rental Table ----------
+            JOptionPane.showMessageDialog(null, "Your Fine Amount is RS."+fineAmount);
             boolean isDeleted = rentalBookRepository.returnRental(rentalId);
             System.out.println("Return Ok : "+isDeleted);
 
