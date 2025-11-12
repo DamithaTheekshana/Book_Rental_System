@@ -17,9 +17,9 @@ public class BookPageServiceImpl implements BookPageService {
     ObservableList <Book> books = FXCollections.observableArrayList();
 
     @Override
-    public ObservableList<Book> getAllCustomers() {
+    public ObservableList<Book> getAllBooks() {
         try {
-            ResultSet resultSet = bookPageRepository.getAllCustomers();
+            ResultSet resultSet = bookPageRepository.getAllBooks();
 
             while (resultSet.next()){
                 books.add(new Book(

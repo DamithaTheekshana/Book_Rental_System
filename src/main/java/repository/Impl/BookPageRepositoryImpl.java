@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class BookPageRepositoryImpl implements BookPageRepository {
     @Override
-    public ResultSet getAllCustomers() throws SQLException {
+    public ResultSet getAllBooks() throws SQLException {
 
         String SQL = "SELECT * FROM book";
 

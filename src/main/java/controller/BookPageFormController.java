@@ -149,7 +149,7 @@ public class BookPageFormController implements Initializable {
 
     private void getAllBooks(){
           books.clear();
-          books = bookPageService.getAllCustomers();
+          books = bookPageService.getAllBooks();
           tblBook.setItems(books);
     }
 
