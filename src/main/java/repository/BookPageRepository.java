@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface BookPageRepository {
+
     ResultSet getAllBooks() throws SQLException;
 
     ResultSet getSearchedBook(String bookName) throws SQLException;
@@ -17,4 +18,8 @@ public interface BookPageRepository {
     boolean updateBookQty(int qty,String bookId);
 
     boolean addedBookQty(int qty, String bookId);
+
+    ResultSet getOldRentalQty(String rentalId);
+
+    boolean updateRentalQty(String bookId, int qty, int difference);
 }

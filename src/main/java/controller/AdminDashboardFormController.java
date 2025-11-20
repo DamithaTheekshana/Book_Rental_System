@@ -43,7 +43,6 @@ public class AdminDashboardFormController {
             throw new RuntimeException(e);
         }
         BookPageStage.show();
-
     }
 
     Stage customerPageStage = new Stage();
@@ -56,7 +55,6 @@ public class AdminDashboardFormController {
 
     @FXML
     void btnDashboardOnAction(ActionEvent event) {
-
     }
 
     Stage rentalPageStage = new Stage();
@@ -82,5 +80,4 @@ public class AdminDashboardFormController {
         }
         historyPageStage.show();
     }
-
 }

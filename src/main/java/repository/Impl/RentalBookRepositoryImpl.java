@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RentalBookRepositoryImpl implements RentalBookRepository {
+
     @Override
     public ResultSet getAllRentalBooks() throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
@@ -34,7 +35,6 @@ public class RentalBookRepositoryImpl implements RentalBookRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -88,6 +88,5 @@ public class RentalBookRepositoryImpl implements RentalBookRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

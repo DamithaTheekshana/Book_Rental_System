@@ -1,11 +1,14 @@
 package service.Impl;
 
+import controller.RentalPageFormController;
 import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.dto.RentalBook;
 import repository.BookPageRepository;
+import repository.HistoryPageRepository;
 import repository.Impl.BookPageRepositoryImpl;
+import repository.Impl.HistoryRepositoryImpl;
 import repository.Impl.RentalBookRepositoryImpl;
 import repository.RentalBookRepository;
 import service.BookPageService;
@@ -23,8 +26,6 @@ public class RentalBookServiceImpl implements RentalBookService {
     RentalBookRepository rentalBookRepository = new RentalBookRepositoryImpl();
     BookPageService bookPageService = new BookPageServiceImpl();
     HistoryPageService historyPageService = new HistoryPageServiceImpl();
-    BookPageRepository bookPageRepository = new BookPageRepositoryImpl();
-
 
     @Override
     public ObservableList<RentalBook> getAllRentalBooks() throws SQLException {
@@ -47,27 +48,20 @@ public class RentalBookServiceImpl implements RentalBookService {
     public void addRentalBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
-
             connection.setAutoCommit(false);
-            //        ---------- Add Rental Book ----------
-            boolean isAdded = rentalBookRepository.addRentakBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
-            System.out.println("Add Rental Book : "+isAdded);
 
-//        ---------- Update Book Qty ----------
+            boolean isAdded = rentalBookRepository.addRentakBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
+
             if (isAdded){
                 boolean isUpdated = bookPageService.updateBookQty(qty, bookId);
-                System.out.println("Update Book QTY : "+isUpdated);
 
-//                ---------- Update History Table ----------
                 if (isUpdated){
                     boolean AddedHistory = historyPageService.addHistory(bookId, custId, rentalDate, dueDate, qty);
-                    System.out.println("Added History : "+AddedHistory );
 
                     if (AddedHistory) {
                         connection.commit();
                     }
                 }
-
             }
         } catch (SQLException e) {
             connection.rollback();
@@ -78,25 +72,69 @@ public class RentalBookServiceImpl implements RentalBookService {
     }
 
     @Override
-    public void deleteRental(String deleteID) {
-        boolean isDelete = rentalBookRepository.deleteRental(deleteID);
+    public void deleteRental(String deleteID, int qty, String bookId, String custId, String rentalDate, String dueDate) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+            boolean isDeleteRental = rentalBookRepository.deleteRental(deleteID);
 
+            if (isDeleteRental){
+                boolean isAddedBookQty = bookPageService.addedBookQty(qty, bookId);
+
+                if (isAddedBookQty) {
+                    boolean isDeletedHistoryTbl = historyPageService.deleteHistoryTbl(bookId, custId, rentalDate, dueDate);
+                    if (isDeletedHistoryTbl){
+                        connection.commit();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            connection.setAutoCommit(true);
+        }
     }
 
     @Override
-    public void updateRentalBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) {
+    public void updateRentalBook(String rentalId, String bookId, String custId, String rentalDate, String dueDate, int qty) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-//            ---------- Update Rental Book ---------
+            connection.setAutoCommit(false);
+
+            int oldQty = bookPageService.getOldRentalQty(rentalId);
             boolean isUpdate = rentalBookRepository.updateRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
-            System.out.println("Update Rental : "+isUpdate);
-//        ---------- Book Table Qty ----------
+
+            if (isUpdate) {
+                int difference = qty - oldQty;
+
+                if (difference < 0) {
+
+                    boolean updateQty = bookPageService.updateRentalQty(bookId, qty, difference * -1);
+
+                } else {
+                    boolean isUpdated = bookPageService.updateBookQty(difference, bookId);
+
+                }
+
+                boolean addedHistory = historyPageService.addHistory(bookId, custId, rentalDate, dueDate, qty);
+
+                if (addedHistory) {
+                    connection.commit();
+
+                } else {
+                    connection.rollback();
+                }
+            } else {
+                connection.rollback();
+            }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            connection.rollback();
+        } finally {
+            connection.setAutoCommit(true);
         }
-
-
     }
 
     @Override
@@ -120,7 +158,6 @@ public class RentalBookServiceImpl implements RentalBookService {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
             connection.setAutoCommit(false);
-            // ------------------ Show Fine Amount Message ------------------
             if (fineAmount > 0) {
                 JOptionPane.showMessageDialog(
                         null,
@@ -136,22 +173,16 @@ public class RentalBookServiceImpl implements RentalBookService {
                         JOptionPane.INFORMATION_MESSAGE
                 );
             }
-//        ---------- Rental Table ----------
-            boolean isDeleted = rentalBookRepository.returnRental(rentalId);
-            System.out.println("Return Ok : "+isDeleted);
 
-//        ---------- Book Table ----------
+            boolean isDeleted = rentalBookRepository.returnRental(rentalId);
+
             if (isDeleted){
                 boolean isAddedBookQty = bookPageService.addedBookQty(qty, bookId);
-                System.out.println("Added Book Qty : "+isAddedBookQty);
 
                 if (isAddedBookQty){
                     boolean isupdateTblHistory = historyPageService.updateTblHistory(bookId, custId, returnDate, overdueDays, fineAmount);
-                    System.out.println("Update Table History : "+isupdateTblHistory);
-
                     if (isupdateTblHistory){
                         connection.commit();
-
                         JOptionPane.showMessageDialog(
                                 null,
                                 "✅ Book returned successfully!\nRecord updated in history.",
@@ -160,7 +191,6 @@ public class RentalBookServiceImpl implements RentalBookService {
                         );
                     }
                 }
-
             }
         } catch (SQLException e) {
             connection.rollback();
@@ -168,6 +198,5 @@ public class RentalBookServiceImpl implements RentalBookService {
         }finally {
             connection.setAutoCommit(true);
         }
-
     }
 }

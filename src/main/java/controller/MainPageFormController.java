@@ -38,7 +38,6 @@ public class MainPageFormController {
             throw new RuntimeException(e);
         }
         AdminLoginPageStage.show();
-
     }
 
     Stage StaffLoginPageStage = new Stage();
@@ -52,5 +51,4 @@ public class MainPageFormController {
         }
         StaffLoginPageStage.show();
     }
-
 }

@@ -51,4 +51,10 @@ public class HistoryPageServiceImpl implements HistoryPageService {
     public void clearData() {
         historyPageRepository.clearData();
     }
+
+    @Override
+    public boolean deleteHistoryTbl(String bookId, String custId, String rentalDate, String dueDate) {
+        boolean isDeleteHistoryTbl = historyPageRepository.deleteHistoryTbl(bookId, custId, rentalDate, dueDate);
+        return isDeleteHistoryTbl;
+    }
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -120,7 +119,6 @@ public class CustomerPageFormController implements Initializable {
                 System.out.println(newValue);
 
                 setSelectedValue(newValue);
-
             }
         });
     }
@@ -146,5 +144,4 @@ public class CustomerPageFormController implements Initializable {
         txtEmail.setText(null);
         txtAddress.setText(null);
     }
-
 }

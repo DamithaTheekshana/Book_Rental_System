@@ -9,14 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BookPageRepositoryImpl implements BookPageRepository {
+
     @Override
     public ResultSet getAllBooks() throws SQLException {
 
         String SQL = "SELECT * FROM book";
 
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(SQL);
-            ResultSet resultSet = pstm.executeQuery();
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(SQL);
+        ResultSet resultSet = pstm.executeQuery();
 
         return resultSet;
     }
@@ -74,7 +75,6 @@ public class BookPageRepositoryImpl implements BookPageRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -88,7 +88,6 @@ public class BookPageRepositoryImpl implements BookPageRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -102,6 +101,31 @@ public class BookPageRepositoryImpl implements BookPageRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Override
+    public ResultSet getOldRentalQty(String rentalId) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("SELECT Qty FROM rentalbook WHERE Rental_ID = ?");
+            pstm.setObject(1,rentalId);
+            ResultSet rst = pstm.executeQuery();
+            return rst;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean updateRentalQty(String bookId, int qty, int difference) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("UPDATE book SET Qty = Qty + ? WHERE Book_ID = ?");
+            pstm.setObject(1,difference);
+            pstm.setObject(2,bookId);
+            return pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

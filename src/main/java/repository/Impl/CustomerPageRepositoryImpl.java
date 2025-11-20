@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerPageRepositoryImpl implements CustomerPageRepository {
+
     @Override
     public ResultSet getAllCustomers() throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();

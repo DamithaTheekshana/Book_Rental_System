@@ -18,12 +18,8 @@ import service.RentalBookService;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
@@ -101,58 +97,23 @@ public class RentalPageFormController implements Initializable {
         String dueDate    = txtDueDate.getText();
         int qty = Integer.parseInt(txtQty.getText());
 
-        //ObservableList<RentalBook> data = FXCollections.observableArrayList();
-        RentalBook rentalBook =  new RentalBook();
-        rentalBook.setRental_ID(rentalId);
-        rentalBook.setBook_ID(bookId);
-        rentalBook.setCust_ID(custId);
-        rentalBook.setQty(qty);
-//        String dateString = "2025-11-12"; // Example date string
-        String pattern = "yyyy-MM-dd"; // Pattern matching the date string
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-        try {
-            Date dateRenal = formatter.parse(rentalDate);
-            rentalBook.setRental_Date(dateRenal);
-            Date dateDue = formatter.parse(dueDate);
-            rentalBook.setDue_Date(dateDue);
-
-
-        } catch (ParseException e) {
-            System.err.println("Error parsing the date string: " + e.getMessage());
-            e.printStackTrace();
-        }
-        rentalBooks.add(rentalBook);
-        tblRental.setItems(rentalBooks);
-        //rentalBookService.addRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
-        //rentalBooks.clear();
+        rentalBookService.addRentalBook(rentalId, bookId, custId, rentalDate, dueDate, qty);
+        rentalBooks.clear();
         clearRentalBook();
-        //getAllRentalBooks();
+        getAllRentalBooks();
     }
-
-
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException {
-
-//         rentalBookService.deleteRental(txtRentalID.getText());
-//         clearRentalBook();
-//         getAllRentalBooks();
-
-        RentalBook selectedRental = tblRental.getSelectionModel().getSelectedItem();
-
-        if (selectedRental != null) {
-
-            rentalBookService.deleteRental(selectedRental.getRental_ID());
-
-            rentalBooks.remove(selectedRental);
-
-            tblRental.refresh();
-
-            clearRentalBook();
-        } else {
-            System.out.println("Please select a row to delete.");
-        }
-
+        String deleteID = txtRentalID.getText();
+        String bookId   = txtBookID.getText();
+        String custId   = txtCustID.getText();
+        String rentalDate = txtRentalDate.getText();
+        String dueDate    = txtDueDate.getText();
+        int deleteQty = Integer.parseInt(txtQty.getText());
+        rentalBookService.deleteRental(deleteID,deleteQty,bookId,custId,rentalDate,dueDate);
+        clearRentalBook();
+        getAllRentalBooks();
     }
 
     @FXML
@@ -164,7 +125,7 @@ public class RentalPageFormController implements Initializable {
         String dueDate    = txtDueDate.getText();
         int qty = Integer.parseInt(txtQty.getText());
         String returnDate = txtReturnDate.getText();
-        int overdueDays = Integer.parseInt(getOverdueDays(rentalDate, dueDate, returnDate));
+        int overdueDays = Integer.parseInt(getOverdueDays(dueDate, returnDate));
         double fineAmount = overdueDays * 50;
         System.out.println(overdueDays);
         System.out.println(fineAmount);
@@ -172,8 +133,6 @@ public class RentalPageFormController implements Initializable {
         rentalBookService.setReturn(rentalId, bookId, custId, rentalDate, dueDate, qty, returnDate, overdueDays, fineAmount);
         clearRentalBook();
         getAllRentalBooks();
-
-
     }
 
     @FXML
@@ -226,16 +185,13 @@ public class RentalPageFormController implements Initializable {
                 System.out.println(newValue);
 
                 setSelectedValue(newValue);
-
             }
         });
-
-
     }
 
     private void getAllRentalBooks() throws SQLException {
         rentalBooks.clear();
-        //rentalBooks = rentalBookService.getAllRentalBooks();
+        rentalBooks = rentalBookService.getAllRentalBooks();
         tblRental.setItems(rentalBooks);
     }
 
@@ -258,27 +214,19 @@ public class RentalPageFormController implements Initializable {
         txtReturnDate.setText(null);
     }
 
+    private String getOverdueDays( String dueDate, String returnDate) {
 
-
-    private String getOverdueDays(String rentalDate, String dueDate, String returnDate) {
-        // Define date format (oya UI eke danna date format eka anuwa mekata wenas karanna puluwan)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        // Convert Strings to LocalDate objects
         LocalDate due = LocalDate.parse(dueDate, formatter);
         LocalDate returned = LocalDate.parse(returnDate, formatter);
 
-        // Calculate days between due date and return date
         long daysBetween = ChronoUnit.DAYS.between(due, returned);
 
-        // If return date is before due date, no overdue
         if (daysBetween <= 0) {
             return "0";
         } else {
             return String.valueOf(daysBetween);
         }
     }
-
-
-
 }

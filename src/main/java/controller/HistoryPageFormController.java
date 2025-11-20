@@ -83,5 +83,4 @@ public class HistoryPageFormController implements Initializable {
         rentalBookHistories = historyPageService.getAllHistory();
         tblHistory.setItems(rentalBookHistories);
     }
-
 }

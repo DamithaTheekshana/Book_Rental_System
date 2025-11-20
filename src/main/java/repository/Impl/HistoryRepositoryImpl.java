@@ -33,7 +33,6 @@ public class HistoryRepositoryImpl implements HistoryPageRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -51,7 +50,22 @@ public class HistoryRepositoryImpl implements HistoryPageRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Override
+    public boolean deleteHistoryTbl(String bookId, String custId, String rentalDate, String dueDate) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("DELETE FROM rentalbookhistory WHERE Book_ID = ? AND Cust_ID = ? AND Rental_Date = ? AND Due_Date = ?");
+            pstm.setObject(1,bookId);
+            pstm.setObject(2,custId);
+            pstm.setObject(3,rentalDate);
+            pstm.setObject(4,dueDate);
+
+            return pstm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

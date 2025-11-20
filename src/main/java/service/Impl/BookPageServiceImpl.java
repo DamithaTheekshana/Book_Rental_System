@@ -3,7 +3,6 @@ package service.Impl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.dto.Book;
-import model.dto.Customer;
 import repository.BookPageRepository;
 import repository.Impl.BookPageRepositoryImpl;
 import service.BookPageService;
@@ -29,13 +28,11 @@ public class BookPageServiceImpl implements BookPageService {
                         resultSet.getInt("Qty"),
                         resultSet.getString("Language")
                 ));
-
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-         return books;
+        return books;
     }
 
     @Override
@@ -78,5 +75,20 @@ public class BookPageServiceImpl implements BookPageService {
     public boolean addedBookQty(int qty, String bookId) {
         boolean isAddQty = bookPageRepository.addedBookQty(qty, bookId);
         return isAddQty;
+    }
+
+    @Override
+    public int getOldRentalQty(String rentalId) throws SQLException {
+        ResultSet rst = bookPageRepository.getOldRentalQty(rentalId);
+        if (rst.next()){
+            return rst.getInt("Qty");
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean updateRentalQty(String bookId, int qty, int difference) {
+        boolean updateQty = bookPageRepository.updateRentalQty(bookId, qty, difference);
+        return updateQty;
     }
 }

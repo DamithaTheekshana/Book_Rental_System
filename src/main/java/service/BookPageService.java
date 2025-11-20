@@ -7,6 +7,7 @@ import model.dto.Customer;
 import java.sql.SQLException;
 
 public interface BookPageService {
+
     ObservableList<Book> getAllBooks();
 
     ObservableList<Book> getSearchedBook(String bookName) throws SQLException;
@@ -20,4 +21,8 @@ public interface BookPageService {
     boolean updateBookQty(int qty, String bookId);
 
     boolean addedBookQty(int qty, String bookId);
+
+    int getOldRentalQty(String rentalId) throws SQLException;
+
+    boolean updateRentalQty(String bookId, int qty, int difference);
 }

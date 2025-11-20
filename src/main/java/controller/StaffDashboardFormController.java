@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import model.dto.Book;
 
 import java.io.IOException;
 
@@ -41,7 +40,6 @@ public class StaffDashboardFormController {
             throw new RuntimeException(e);
         }
         BookPageStage.show();
-
     }
 
     Stage customerPageStage = new Stage();
@@ -72,5 +70,4 @@ public class StaffDashboardFormController {
         }
         rentalPageStage.show();
     }
-
 }

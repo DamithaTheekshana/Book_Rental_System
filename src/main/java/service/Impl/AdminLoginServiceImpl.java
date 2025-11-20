@@ -23,7 +23,6 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
               return username.equals(user) && password.equals(Pass) && JobRole.equals(role);
           }
-
           return false;
     }
 }

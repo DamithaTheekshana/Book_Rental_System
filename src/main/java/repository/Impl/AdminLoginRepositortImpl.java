@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AdminLoginRepositortImpl implements AdminLoginRepository {
+
     @Override
     public ResultSet getUser(String username) throws SQLException {
         String SQL = "SELECT * FROM User WHERE User_ID = ?";

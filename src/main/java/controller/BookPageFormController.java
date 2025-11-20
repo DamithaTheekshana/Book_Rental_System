@@ -115,7 +115,6 @@ public class BookPageFormController implements Initializable {
         books.clear();
         books = bookPageService.getSearchedBook(bookName);
         tblBook.setItems(books);
-
     }
 
     @FXML
