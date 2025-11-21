@@ -127,8 +127,6 @@ public class RentalPageFormController implements Initializable {
         String returnDate = txtReturnDate.getText();
         int overdueDays = Integer.parseInt(getOverdueDays(dueDate, returnDate));
         double fineAmount = overdueDays * 50;
-        System.out.println(overdueDays);
-        System.out.println(fineAmount);
 
         rentalBookService.setReturn(rentalId, bookId, custId, rentalDate, dueDate, qty, returnDate, overdueDays, fineAmount);
         clearRentalBook();
