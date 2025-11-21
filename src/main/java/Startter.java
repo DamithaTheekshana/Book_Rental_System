@@ -6,12 +6,14 @@ import javafx.stage.Stage;
 public class Startter extends Application {
 
     public static void main(String[] args) {
+
         launch(args);
     }
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/MainPage.fxml"))));
         stage.show();
-
+        stage.setResizable(false);
     }
 }

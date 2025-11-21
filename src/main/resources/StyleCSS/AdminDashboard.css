@@ -1,0 +1,19 @@
+.dashboard{
+-fx-background-image: url("/img/Dashboard.jpg");
+-fx-background-size: cover;
+-fx-background-repeat: no-repeat;
+-fx-background-position: center;
+}
+
+.button{
+-fx-border-radius:5;
+-fx-background-color: #F1E3C6;
+-fx-border-color: #575757;
+}
+
+.bar{
+-fx-background-radius:10;
+-fx-border-radius:10;
+-fx-background-color: #EBEBB2;
+-fx-border-color: #575757;
+}

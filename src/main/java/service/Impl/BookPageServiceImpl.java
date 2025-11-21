@@ -1,0 +1,94 @@
+package service.Impl;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.dto.Book;
+import repository.BookPageRepository;
+import repository.Impl.BookPageRepositoryImpl;
+import service.BookPageService;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class BookPageServiceImpl implements BookPageService {
+
+    BookPageRepository bookPageRepository = new BookPageRepositoryImpl();
+    ObservableList <Book> books = FXCollections.observableArrayList();
+
+    @Override
+    public ObservableList<Book> getAllBooks() {
+        try {
+            ResultSet resultSet = bookPageRepository.getAllBooks();
+
+            while (resultSet.next()){
+                books.add(new Book(
+                        resultSet.getString("Book_ID"),
+                        resultSet.getString("Title"),
+                        resultSet.getString("Author"),
+                        resultSet.getInt("Qty"),
+                        resultSet.getString("Language")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return books;
+    }
+
+    @Override
+    public ObservableList<Book> getSearchedBook(String bookName) throws SQLException {
+        ResultSet resultSet = bookPageRepository.getSearchedBook(bookName);
+        while (resultSet.next()){
+            books.add(new Book(
+                    resultSet.getString("Book_ID"),
+                    resultSet.getString("Title"),
+                    resultSet.getString("Author"),
+                    resultSet.getInt("Qty"),
+                    resultSet.getString("Language")
+            ));
+        }
+        return books;
+    }
+
+    @Override
+    public void addBook(String bookId, String title, String author, int qty, String language) {
+        bookPageRepository.addBook(bookId, title, author, qty, language);
+    }
+
+    @Override
+    public void deleteBook(String bookId) {
+        bookPageRepository.deleteBook(bookId);
+    }
+
+    @Override
+    public void updateBook(String bookId, String title, String author, int qty, String language) {
+        bookPageRepository.updateBook(bookId, title, author, qty, language);
+    }
+
+    @Override
+    public boolean updateBookQty(int qty, String bookId) {
+        boolean isAdded = bookPageRepository.updateBookQty(qty, bookId);
+        return isAdded;
+    }
+
+    @Override
+    public boolean addedBookQty(int qty, String bookId) {
+        boolean isAddQty = bookPageRepository.addedBookQty(qty, bookId);
+        return isAddQty;
+    }
+
+    @Override
+    public int getOldRentalQty(String rentalId) throws SQLException {
+        ResultSet rst = bookPageRepository.getOldRentalQty(rentalId);
+        if (rst.next()){
+            return rst.getInt("Qty");
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean updateRentalQty(String bookId, int qty, int difference) {
+        boolean updateQty = bookPageRepository.updateRentalQty(bookId, qty, difference);
+        return updateQty;
+    }
+}

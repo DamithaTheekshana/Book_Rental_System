@@ -1,0 +1,13 @@
+.background{
+-fx-background-image: url("/img/pexels-caio-46274.jpg");
+-fx-background-size: cover;
+-fx-background-repeat: no-repeat;
+-fx-background-position: center;
+}
+
+.admin{
+-fx-background-radius: 20;
+-fx-border-color: black;
+-fx-background-color: ECDFB1;
+-fx-border-radius: 20;
+}
